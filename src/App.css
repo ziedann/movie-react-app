@@ -1,0 +1,34 @@
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.movie-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+}
+
+.movie-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0.25rem 0;
+}
+
+.all-movies h2 {
+  color: white;
+  font-size: 2rem;
+  margin: 2rem 0;
+}
