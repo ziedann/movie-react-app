@@ -3,17 +3,10 @@ import Search from './assets/components/search'
 import Spinner from './assets/components/spinner'
 import MovieCard from './assets/components/MovieCard'
 import { useDebounce } from 'react-use'
-import { updateSearchCount } from './appwrite'
+import { updateSearchCount, getSearchHistory } from './appwrite'
 
 const API_KEY = '23b556389baa6512bc64135681503557';
 const API_URL = 'https://api.themoviedb.org/3';
-const API_OPTIONS = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`
-  }
-}
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,13 +23,10 @@ const App = () => {
 
     try {
       const endpoint = query
-        ? `${API_URL}/search/movie?query=${encodeURIComponent(query)}&api_key=${API_KEY}`
+        ? `${API_URL}/search/movie?query=${encodeURIComponent(query)}&api_key=${API_KEY}&language=en-US&page=1`
         : `${API_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&language=en-US&page=1`;
 
-      const response = await fetch(
-        endpoint,
-        API_OPTIONS
-      );
+      const response = await fetch(endpoint);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -49,9 +39,16 @@ const App = () => {
       }
 
       setMoviesList(data.results);
-      updateSearchCount(query);
-
-
+      
+      // Only update search count if we have a query and results
+      if (query && data.results.length > 0) {
+        try {
+          await updateSearchCount(query, data.results[0]);
+        } catch (error) {
+          // Log the error but don't show it to the user since it's not critical
+          console.error('Error updating search count:', error);
+        }
+      }
 
     } catch (error) {
       console.error('Error fetching movies:', error);
@@ -75,11 +72,13 @@ const App = () => {
         </header>
 
         <section className="all-movies">
-          <h2 className='mt-[40px]'>All Movies</h2>
+          <h2 className='mt-[40px]'>{searchTerm ? 'Search Results' : 'Popular Movies'}</h2>
           {isLoading ? (
             <Spinner />
           ) : errorMessage ? (
             <p className='text-red-500'>{errorMessage}</p>
+          ) : moviesList.length === 0 ? (
+            <p>No movies found. Try a different search term.</p>
           ) : (
             <ul>
               {moviesList.map((movie) => (
