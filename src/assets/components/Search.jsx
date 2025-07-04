@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Search({ searchTerm, setSearchTerm }) {
+const Search = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className='search'>
         <div>
