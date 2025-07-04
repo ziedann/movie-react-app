@@ -9,12 +9,14 @@ const API_KEY = '23b556389baa6512bc64135681503557';
 const API_URL = 'https://api.themoviedb.org/3';
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [moviesList, setMoviesList] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [moviesList, setMoviesList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
@@ -40,7 +42,7 @@ const App = () => {
       }
 
       setMoviesList(data.results);
-      
+
       // Only update search count if we have a query and results
       if (query && data.results.length > 0) {
         try {
@@ -86,8 +88,23 @@ const App = () => {
         </header>
 
         {trendingMovies.length > 0 && (
+          <section className="trending">
+            <h2 className='text-2xl font-bold my-6'>Trending Movies</h2>
+            <ul>
+              <div></div>
+              {trendingMovies.map((movie, index) => (
+                <li key={movie.$id} className='hover: cursor-pointer'>
+                  <p>{index + 1}</p>
+                  <img src={movie.poster_url} alt={movie.searchTerm} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* {trendingMovies.length > 0 && (
           <section className="trending-movies">
-            <h2 className="text-2xl font-bold mb-6">Trending Movies</h2>
+            <h2 className="text-2xl font-bold my-6">Trending Movies</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {trendingMovies.map((movie, index) => (
                 <div key={movie.$id} className="relative bg-dark-200 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
@@ -107,18 +124,19 @@ const App = () => {
                       className="w-full h-64 object-cover"
                     />
                   )}
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">{movie.searchTerm}</h3>
+                  <div className="mb-4 mt-2">
+                    <h3 className="text-lg text-light-200 font-semibold">{movie.searchTerm}</h3>
                     <p className="text-sm text-gray-400">Searched {movie.count} times</p>
                   </div>
                 </div>
               ))}
             </div>
           </section>
-        )}
+        )} */}
 
 
-        <section className="all-movies">
+
+        <section className="all-movies mt-10">
           <h2>All Movies</h2>
           {isLoading ? (
             <Spinner />
