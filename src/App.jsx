@@ -89,7 +89,7 @@ const App = () => {
 
         {trendingMovies.length > 0 && (
           <section className="trending">
-            <h2 className='text-2xl font-bold my-6'>Trending Movies</h2>
+            <h2 className='my-6'>Trending Movies</h2>
             <ul>
               <div></div>
               {trendingMovies.map((movie, index) => (
@@ -101,40 +101,6 @@ const App = () => {
             </ul>
           </section>
         )}
-
-        {/* {trendingMovies.length > 0 && (
-          <section className="trending-movies">
-            <h2 className="text-2xl font-bold my-6">Trending Movies</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {trendingMovies.map((movie, index) => (
-                <div key={movie.$id} className="relative bg-dark-200 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
-                  <div className="absolute top-2 left-2 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
-                    {index + 1}
-                  </div>
-                  {movie.poster_url ? (
-                    <img 
-                      src={movie.poster_url} 
-                      alt={movie.searchTerm} 
-                      className="w-full h-64 object-cover"
-                    />
-                  ) : (
-                    <img 
-                      src="/no-movie.png" 
-                      alt="No poster available" 
-                      className="w-full h-64 object-cover"
-                    />
-                  )}
-                  <div className="mb-4 mt-2">
-                    <h3 className="text-lg text-light-200 font-semibold">{movie.searchTerm}</h3>
-                    <p className="text-sm text-gray-400">Searched {movie.count} times</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )} */}
-
-
 
         <section className="all-movies mt-10">
           <h2>All Movies</h2>
