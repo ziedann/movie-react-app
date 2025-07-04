@@ -76,9 +76,21 @@ const App = () => {
           {isLoading ? (
             <Spinner />
           ) : errorMessage ? (
-            <p className='text-red-500'>{errorMessage}</p>
+            <div className="flex flex-col items-center justify-center mt-10 space-y-4">
+              {/* <img src="/no-movie.png" alt="No movies found" className="w-64 h-64 object-contain opacity-80" /> */}
+              <div className="text-center">
+                <p className="text-red-500 text-xl font-semibold mb-2">{errorMessage}</p>
+                <p className="text-light-200 text-sm">Please try searching with a different keyword</p>
+              </div>
+            </div>
           ) : moviesList.length === 0 ? (
-            <p>No movies found. Try a different search term.</p>
+            <div className="flex flex-col items-center justify-center mt-10 space-y-4">
+              {/* <img src="/no-movie.png" alt="No movies found" className="w-64 h-64 object-contain opacity-80" /> */}
+              <div className="text-center">
+                <p className="text-light-200 text-xl font-semibold mb-2">No movies found</p>
+                <p className="text-light-200 text-sm">Try adjusting your search to find what you're looking for</p>
+              </div>
+            </div>
           ) : (
             <ul>
               {moviesList.map((movie) => (
